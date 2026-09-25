@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <meta name="theme-color" content="#0b1020">
+
+  <title>Ethiopia Bingo</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="app">
+
+    <!-- =========================
+         TOP HEADER
+    ========================== -->
+    <header class="top-header">
+
+      <div class="brand">
+        <div class="brand-icon">🎱</div>
+
+        <div>
+          <div class="brand-title">Ethiopia Bingo</div>
+          <div class="brand-subtitle">Live Bingo</div>
+        </div>
+      </div>
+
+      <div class="connection-status" id="connectionStatus">
+        <span class="status-dot"></span>
+        <span id="connectionText">Connecting...</span>
+      </div>
+
+    </header>
+
+
+    <!-- =========================
+         AUTH / CONTACT SECTION
+    ========================== -->
+    <section id="authSection" class="screen-section">
+
+      <div class="welcome-card">
+
+        <div class="welcome-icon">🎱</div>
+
+        <h1>Welcome to Ethiopia Bingo</h1>
+
+        <p>
+          Share your Telegram contact to verify your account
+          and start playing.
+        </p>
+
+        <button
+          id="contactButton"
+          type="button"
+          class="primary-button"
+        >
+          📱 Share Telegram Contact
+        </button>
+
+        <div
+          id="authMessage"
+          class="message"
+        ></div>
+
+        <div
+          id="authError"
+          class="error-message"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN GAME
+    ========================== -->
+    <main id="gameSection" class="hidden">
+
+      <!-- USER WALLET -->
+      <section class="wallet-card">
+
+        <div class="wallet-left">
+
+          <div class="wallet-icon">💰</div>
+
+          <div>
+            <div class="wallet-label">Wallet Balance</div>
+
+            <div class="wallet-balance">
+              <span id="walletBalance">0.00</span>
+              <span class="currency">ETB</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="wallet-actions">
+
+          <button
+            id="depositButton"
+            type="button"
+            class="small-button deposit-button"
+          >
+            + Deposit
+          </button>
+
+          <button
+            id="withdrawButton"
+            type="button"
+            class="small-button withdraw-button"
+          >
+            Withdraw
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- PLAYER INFO -->
+      <section class="player-card">
+
+        <div class="player-avatar" id="playerAvatar">
+          👤
+        </div>
+
+        <div class="player-info">
+
+          <div
+            id="playerName"
+            class="player-name"
+          >
+            Player
+          </div>
+
+          <div
+            id="playerUsername"
+            class="player-username"
+          >
+            Telegram Player
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           GAME STATUS
+      ========================== -->
+      <section class="game-status-card">
+
+        <div class="status-header">
+
+          <div>
+            <div class="section-label">GAME STATUS</div>
+
+            <div
+              id="gameStatus"
+              class="game-status"
+            >
+              Waiting
+            </div>
+          </div>
+
+          <div
+            id="gameTimer"
+            class="game-timer"
+          >
+            --
+          </div>
+
+        </div>
+
+
+        <div class="game-stats">
+
+          <div class="stat-box">
+
+            <div class="stat-icon">🎟️</div>
+
+            <div class="stat-label">
+              Ticket Price
+            </div>
+
+            <div class="stat-value">
+              <span id="ticketPrice">10</span> ETB
+            </div>
+
+          </div>
+
+
+          <div class="stat-box">
+
+            <div class="stat-icon">🏆</div>
+
+            <div class="stat-label">
+              Prize Pool
+            </div>
+
+            <div class="stat-value">
+              <span id="prizePool">0.00</span> ETB
+            </div>
+
+          </div>
+
+
+          <div class="stat-box">
+
+            <div class="stat-icon">👥</div>
+
+            <div class="stat-label">
+              Players
+            </div>
+
+            <div class="stat-value">
+              <span id="playerCount">0</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           CALLED NUMBER
+      ========================== -->
+      <section class="called-number-card">
+
+        <div class="section-label">
+          LAST CALLED NUMBER
+        </div>
+
+        <div
+          id="lastCalledNumber"
+          class="last-number"
+        >
+          —
+        </div>
+
+        <div
+          id="drawProgress"
+          class="draw-progress"
+        >
+          0 / 20 numbers
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           MASTER BOARD
+      ========================== -->
+      <section class="board-card">
+
+        <div class="section-title-row">
+
+          <div>
+            <div class="section-label">
+              MASTER BOARD
+            </div>
+
+            <h2>
+              Called Numbers
+            </h2>
+          </div>
+
+        </div>
+
+        <div
+          id="masterBoard"
+          class="master-board"
+        >
+          <!-- Numbers generated by app.js -->
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           TICKET SELECTION
+      ========================== -->
+      <section class="ticket-selection-card">
+
+        <div class="section-title-row">
+
+          <div>
+            <div class="section-label">
+              TICKET SELECTION
+            </div>
+
+            <h2>
+              Choose Your Tickets
+            </h2>
+          </div>
+
+          <div class="ticket-limit">
+            Max 4
+          </div>
+
+        </div>
+
+
+        <div class="ticket-selection-info">
+
+          <div>
+            Selected:
+            <strong id="selectedTicketCount">0</strong>
+            / 4
+          </div>
+
+          <div>
+            Total:
+            <strong>
+              <span id="selectedTicketCost">0</span>
+              ETB
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div
+          id="ticketGrid"
+          class="ticket-grid"
+        >
+          <!-- Ticket numbers 1-500 generated by app.js -->
+        </div>
+
+
+        <button
+          id="joinButton"
+          type="button"
+          class="primary-button join-button"
+        >
+          🎟️ Join Game
+        </button>
+
+
+        <div
+          id="joinMessage"
+          class="message"
+        ></div>
+
+        <div
+          id="joinError"
+          class="error-message"
+        ></div>
+
+      </section>
+
+
+      <!-- =========================
+           MY TICKETS
+      ========================== -->
+      <section class="my-tickets-card">
+
+        <div class="section-title-row">
+
+          <div>
+            <div class="section-label">
+              MY GAME
+            </div>
+
+            <h2>
+              My Tickets
+            </h2>
+          </div>
+
+          <div
+            id="myTicketCount"
+            class="ticket-count"
+          >
+            0
+          </div>
+
+        </div>
+
+
+        <div
+          id="myTickets"
+          class="my-tickets"
+        >
+          <div class="empty-state">
+            <div class="empty-icon">🎟️</div>
+            <div>No tickets selected yet</div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           RANKING
+      ========================== -->
+      <section class="ranking-card">
+
+        <div class="section-title-row">
+
+          <div>
+            <div class="section-label">
+              LEADERBOARD
+            </div>
+
+            <h2>
+              Top Players
+            </h2>
+          </div>
+
+        </div>
+
+
+        <div
+          id="rankingList"
+          class="ranking-list"
+        >
+          <div class="empty-state">
+            Loading rankings...
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           GAME RESULT
+      ========================== -->
+      <section
+        id="resultSection"
+        class="result-card hidden"
+      >
+
+        <div class="result-icon">
+          🏆
+        </div>
+
+        <h2 id="resultTitle">
+          Game Finished
+        </h2>
+
+        <div
+          id="resultMessage"
+          class="result-message"
+        ></div>
+
+        <div class="result-prize">
+
+          <span>
+            Prize
+          </span>
+
+          <strong>
+            <span id="resultPrize">0.00</span>
+            ETB
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           NOTIFICATION
+      ========================== -->
+      <div
+        id="notification"
+        class="notification hidden"
+      >
+        <div id="notificationText"></div>
+      </div>
+
+
+    </main>
+
+
+    <!-- =========================
+         LOADING SCREEN
+    ========================== -->
+    <div
+      id="loadingScreen"
+      class="loading-screen"
+    >
+
+      <div class="loading-logo">
+        🎱
+      </div>
+
+      <div class="loading-title">
+        Ethiopia Bingo
+      </div>
+
+      <div class="loading-spinner"></div>
+
+      <div
+        id="loadingText"
+        class="loading-text"
+      >
+        Connecting to Telegram...
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         ERROR SCREEN
+    ========================== -->
+    <section
+      id="errorSection"
+      class="error-screen hidden"
+    >
+
+      <div class="error-screen-icon">
+        ⚠️
+      </div>
+
+      <h2>
+        Something went wrong
+      </h2>
+
+      <p id="errorScreenMessage">
+        Unable to connect to the game.
+      </p>
+
+      <button
+        id="retryButton"
+        type="button"
+        class="primary-button"
+      >
+        Try Again
+      </button>
+
+    </section>
+
+  </div>
+
+
+  <!-- ==========================================
+       TELEGRAM MINI APP SCRIPT
+       MUST COME BEFORE app.js
+  =========================================== -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+
+  <!-- ==========================================
+       YOUR APP SCRIPT
+  =========================================== -->
+  <script src="app.js"></script>
+
+
+</body>
+</html>
